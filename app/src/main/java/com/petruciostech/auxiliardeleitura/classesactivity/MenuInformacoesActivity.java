@@ -17,8 +17,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.petruciostech.auxiliardeleitura.R;
 import com.petruciostech.auxiliardeleitura.classeobjeto.Livro;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.IllegalFormatConversionException;
+import java.util.TimeZone;
 import java.util.zip.Inflater;
 
 
@@ -50,14 +53,14 @@ public class MenuInformacoesActivity extends AppCompatActivity {
         liv = (Livro)it.getSerializableExtra("com.petruciostech.auxiliardeleitura.classesactivity.classeobjeto.Livro");
         DATA = new Date(liv.getComeco());
         int te =  porcentagem(liv.getPaginas(), liv.getPagParou());
-
+        //long teste = calcularData(DATA);
         txtTitulo.setText(liv.getTitulo());
         txtAutor.setText(liv.getAutor());
         txtPaginas.setText(Integer.toString(liv.getPaginas()));
         txtPagLidas.setText(Integer.toString(liv.getPagParou()));
         txtPorcento.setText(te + "%");
-        lblData.setText(DATA.getDate() + "/" + (DATA.getMonth() + 1)  + "/" + (DATA.getYear() + 1900));
-        Toast.makeText(this, Integer.toString(te), Toast.LENGTH_SHORT).show();
+        lblData.setText(Long.toString(calcularData(DATA)));
+        //Toast.makeText(this, Long.toString(teste), Toast.LENGTH_SHORT).show();
     }
 
     public int porcentagem(int pagTot, int pagPare){
@@ -84,5 +87,10 @@ public class MenuInformacoesActivity extends AppCompatActivity {
         startActivity(it);
     }
 
+    public long calcularData(Date dataInicio){
+        Date atual = new Date(System.currentTimeMillis());
 
+        long diferencaDeDias = (dataInicio.getTime() - atual.getTime()) / (1000 * 60 * 60 * 24);
+        return diferencaDeDias;
+    }
 }

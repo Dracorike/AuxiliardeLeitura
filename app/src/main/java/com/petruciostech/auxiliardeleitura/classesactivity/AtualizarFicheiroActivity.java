@@ -55,7 +55,7 @@ public class AtualizarFicheiroActivity extends AppCompatActivity {
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 data.setVisibility(View.VISIBLE);
                 data.setText(dayOfMonth + "/" + month + "/" + year);
-                DATA = new Date((year - 1900), (month + 1), dayOfMonth);
+                DATA = new Date((year - 1900), (month), dayOfMonth);
             }
         });
 
