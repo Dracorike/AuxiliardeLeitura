@@ -4,9 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.petruciostech.auxiliardeleitura.R;
 import com.petruciostech.auxiliardeleitura.bancodados.LivroDao;
 import com.petruciostech.auxiliardeleitura.classeobjeto.Livro;
@@ -25,12 +23,7 @@ public class CadastroActivity extends AppCompatActivity {
         txtTitulo = findViewById(R.id.txtTitulo);
         txtAutor = findViewById(R.id.txtAutor);
         txtPaginas = findViewById(R.id.txtPaginas);
-
         dao = new LivroDao(this);
-
-        if(txtTitulo.isActivated()){
-            txtTitulo.setText(" ");
-        }
 
     }
 
@@ -48,7 +41,5 @@ public class CadastroActivity extends AppCompatActivity {
             Toast.makeText(this,"Digite um número inteiro no campo páginas", Toast.LENGTH_SHORT).show();
         }
     }
-
-
 
 }

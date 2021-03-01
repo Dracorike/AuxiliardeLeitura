@@ -4,19 +4,17 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
 import com.petruciostech.auxiliardeleitura.classeobjeto.Livro;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class LivroDao {
-    private Helper bc;
-    private SQLiteDatabase banco;
+    private Helper helperBC;
+    private SQLiteDatabase dataBank;
 
     public LivroDao(Context context){
-        bc = new Helper(context);
-        banco = bc.getWritableDatabase();
+        helperBC = new Helper(context);
+        dataBank = helperBC.getWritableDatabase();
     }
 
     public long create(Livro livroCreate){
@@ -25,13 +23,12 @@ public class LivroDao {
         valores.put("autor", livroCreate.getAutor());
         valores.put("paginas", livroCreate.getPaginas());
         valores.put("pagParou", livroCreate.getPagParou());
-
-        return banco.insert("biblioteca",null, valores);
+        return dataBank.insert("biblioteca",null, valores);
     }
 
     public List<Livro> read(){
         List<Livro> livros = new ArrayList<>();
-        Cursor cursor = banco.query("biblioteca", new String[]{"_id", "titulo", "autor", "paginas", "pagParou"},null,
+        Cursor cursor = dataBank.query("biblioteca", new String[]{"_id", "titulo", "autor", "paginas", "pagParou"},null,
                 null, null, null, null);
 
         while(cursor.moveToNext()){
@@ -46,4 +43,5 @@ public class LivroDao {
 
         return livros;
     }
+
 }

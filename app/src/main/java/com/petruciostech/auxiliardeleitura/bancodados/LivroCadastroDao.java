@@ -4,19 +4,17 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
 import com.petruciostech.auxiliardeleitura.classeobjeto.Livro;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class LivroCadastroDao {
-    private Helper bc;
-    private SQLiteDatabase banco;
+    private Helper helperBC;
+    private SQLiteDatabase dataBank;
 
     public LivroCadastroDao(Context context){
-        bc = new Helper(context);
-        banco = bc.getWritableDatabase();
+        helperBC = new Helper(context);
+        dataBank = helperBC.getWritableDatabase();
 
     }
 
@@ -27,12 +25,12 @@ public class LivroCadastroDao {
         valores.put("paginas", livro.getPaginas());
         valores.put("pagParou", livro.getPagParou());
         valores.put("comeco", 0);
-        return banco.insert("estante", null, valores);
+        return dataBank.insert("estante", null, valores);
     }
 
     public List<Livro> read(){
         List<Livro> Mostrar = new ArrayList<>();
-        Cursor cursor = banco.query("estante", new String[]{"_id", "titulo", "autor", "paginas", "pagParou", "comeco"},
+        Cursor cursor = dataBank.query("estante", new String[]{"_id", "titulo", "autor", "paginas", "pagParou", "comeco"},
                 null, null, null, null, null);
 
         while(cursor.moveToNext()){
@@ -43,7 +41,6 @@ public class LivroCadastroDao {
             livro.setPaginas(cursor.getInt(3));
             livro.setPagParou(cursor.getInt(4));
             livro.setComeco(cursor.getLong(5));
-
             Mostrar.add(livro);
         }
 
@@ -57,8 +54,7 @@ public class LivroCadastroDao {
         values.put("paginas", livro.getPaginas());
         values.put("pagParou", livro.getPagParou());
         values.put("comeco", livro.getComeco());
-
-        banco.update("estante", values, "_id = ?", new String[]{Integer.toString(livro.get_id())});
+        dataBank.update("estante", values, "_id = ?", new String[]{Integer.toString(livro.get_id())});
     }
 
 }

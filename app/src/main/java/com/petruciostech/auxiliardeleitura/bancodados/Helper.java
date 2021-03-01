@@ -1,15 +1,10 @@
 package com.petruciostech.auxiliardeleitura.bancodados;
-/*
-* Classe criada para fazer o trabalho
-* gerenciar o banco de dados
-*/
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
 import androidx.annotation.Nullable;
-
 
 public class Helper extends SQLiteOpenHelper {
     private static final String NOME_BANCO = "bancoDeLivros";
@@ -18,14 +13,12 @@ public class Helper extends SQLiteOpenHelper {
 
     public Helper(@Nullable Context context){
         super (context, NOME_BANCO, null, VERSAO_BANCO);
-
         Log.d("Helper", "Constructor");
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.d("Helper", "Create");
-
         String sqlConficuracao = "CREATE TABLE IF NOT EXISTS biblioteca(" +
                 "_id INTEGER PRIMARY  KEY AUTOINCREMENT," +
                 "titulo VARCHAR(255), " +

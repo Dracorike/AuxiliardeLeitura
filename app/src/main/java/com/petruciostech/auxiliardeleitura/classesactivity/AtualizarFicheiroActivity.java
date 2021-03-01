@@ -1,32 +1,25 @@
 package com.petruciostech.auxiliardeleitura.classesactivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.petruciostech.auxiliardeleitura.R;
 import com.petruciostech.auxiliardeleitura.bancodados.LivroCadastroDao;
 import com.petruciostech.auxiliardeleitura.classeobjeto.Livro;
-
-import java.time.LocalDate;
 import java.util.Date;
 
 public class AtualizarFicheiroActivity extends AppCompatActivity {
     private CalendarView calendario;
-    private TextView data;
     private EditText paginas_Lidas;
     private LivroCadastroDao dao;
+    private TextView data;
     private Livro liv;
     private Date DATA;
-
 
     public void onCreate(Bundle bundle){
         super.onCreate(bundle);
@@ -36,10 +29,9 @@ public class AtualizarFicheiroActivity extends AppCompatActivity {
         data = findViewById(R.id.lblDataMostrar);
         paginas_Lidas = findViewById(R.id.txtNumPag);
         dao = new LivroCadastroDao(this);
-
         Intent it = getIntent();
-        liv = (Livro) it.getSerializableExtra("com.petruciostech.auxiliardeleitura.classesactivity.classeobjeto.Livro");
 
+        liv = (Livro) it.getSerializableExtra("com.petruciostech.auxiliardeleitura.classesactivity.classeobjeto.Livro");
         if(!liv.isEmptyDate()){
             DATA = new Date(liv.getComeco());
             calendario.setDate(liv.getComeco());
@@ -50,6 +42,7 @@ public class AtualizarFicheiroActivity extends AppCompatActivity {
         if(!liv.isEmptyPagParou()){
             paginas_Lidas.setText(Integer.toString(liv.getPagParou()));
         }
+
         calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
@@ -61,24 +54,23 @@ public class AtualizarFicheiroActivity extends AppCompatActivity {
 
     }
 
-    public void atualizar(View view) {
+    public void atualizar(View view) {//Metodo utilizado para atualizar especificamente a data e quantas páginas foram lidas
         Livro livro = new Livro();
         livro.set_id(liv.get_id());
         livro.setTitulo(liv.getTitulo());
         livro.setAutor(liv.getAutor());
         livro.setPaginas(liv.getPaginas());
-        try{
+        try{//Verifica se há uma atualização requisitada
             livro.setPagParou(Integer.parseInt(paginas_Lidas.getText().toString()));
-        }catch (Exception ex){
-            if(!liv.isEmptyPagParou()){
+        }catch (Exception ex){//caso não tenha, irá preencher com o if/else
+            if(!liv.isEmptyPagParou()){//Preenche caso tenha conteúdo na classe do livro
                 livro.setPagParou(liv.getPagParou());
-            }else{
+            }else{//Senão "pagParou" recebe 0
                 livro.setPagParou(0);
             }
         }
         livro.setComeco(DATA.getTime());
         dao.update(livro);
-        Toast.makeText(this, DATA.toGMTString(), Toast.LENGTH_SHORT).show();
     }
 
 }
