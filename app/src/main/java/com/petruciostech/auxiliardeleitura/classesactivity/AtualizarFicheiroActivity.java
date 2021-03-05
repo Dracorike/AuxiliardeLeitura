@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.petruciostech.auxiliardeleitura.R;
 import com.petruciostech.auxiliardeleitura.bancodados.LivroCadastroDao;
 import com.petruciostech.auxiliardeleitura.classeobjeto.Livro;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class AtualizarFicheiroActivity extends AppCompatActivity {
@@ -25,6 +26,7 @@ public class AtualizarFicheiroActivity extends AppCompatActivity {
         super.onCreate(bundle);
         setContentView(R.layout.atualizarficheiro);
 
+        SimpleDateFormat formatar = new SimpleDateFormat("yyyy-MM-dd");
         calendario = findViewById(R.id.calendario);
         data = findViewById(R.id.lblDataMostrar);
         paginas_Lidas = findViewById(R.id.txtNumPag);
@@ -35,7 +37,7 @@ public class AtualizarFicheiroActivity extends AppCompatActivity {
         if(!liv.isEmptyDate()){
             DATA = new Date(liv.getComeco());
             calendario.setDate(liv.getComeco());
-            data.setText(DATA.getDate() + "/" + (DATA.getMonth() + 1) + "/" + (DATA.getYear() + 1900));
+            data.setText(formatar.format(DATA));
             data.setVisibility(View.VISIBLE);
         }
 
