@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.petruciostech.auxiliardeleitura.R;
 import com.petruciostech.auxiliardeleitura.bancodados.LivroCadastroDao;
 import com.petruciostech.auxiliardeleitura.classeobjeto.Livro;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -48,9 +49,17 @@ public class AtualizarFicheiroActivity extends AppCompatActivity {
         calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                SimpleDateFormat calendarFormat = new SimpleDateFormat("yyyy-MM-dd");
                 data.setVisibility(View.VISIBLE);
                 data.setText(dayOfMonth + "/" + month + "/" + year);
-                DATA = new Date((year - 1900), (month), dayOfMonth);
+
+                try {
+                    DATA = new Date(calendarFormat.parse(Integer.toString(year) + "-"
+                            + Integer.toString(month+1) + "-" + Integer.toString(dayOfMonth))
+                            .getTime());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
