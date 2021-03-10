@@ -1,5 +1,5 @@
 package com.petruciostech.auxiliardeleitura.classesactivity;
-
+//Importações android e Java
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
