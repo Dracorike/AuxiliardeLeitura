@@ -3,6 +3,7 @@ package com.petruciostech.auxiliardeleitura.classesactivity;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -42,6 +43,8 @@ public class ListaLivrosEscolhidosActivity extends AppCompatActivity{
             }
         });
 
+
+        registerForContextMenu(listaCadastrados);
     }
 
     public void chamar(Livro livro){//A Pequena Gambiarra
@@ -68,6 +71,21 @@ public class ListaLivrosEscolhidosActivity extends AppCompatActivity{
         livroListagemFiltro.clear();
         livroListagemFiltro.addAll(livroListagem);
         listaCadastrados.invalidateViews();
+    }
+
+    public void deletarLivro(MenuItem menuItem){
+        AdapterView.AdapterContextMenuInfo adaptador
+                = (AdapterView.AdapterContextMenuInfo) menuItem.getMenuInfo();
+        Livro apagar = livroListagemFiltro.get(adaptador.position);
+        dao.delete(apagar);
+        onResume();
+
+    }
+
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater i = getMenuInflater();
+        i.inflate(R.menu.menudelete, menu);
     }
 
 }

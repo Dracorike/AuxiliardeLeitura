@@ -57,4 +57,11 @@ public class LivroCadastroDao {
         dataBank.update("estante", values, "_id = ?", new String[]{Integer.toString(livro.get_id())});
     }
 
+    public void delete(Livro livro){
+        dataBank.delete("estante", "_id=?",
+                new String[]{Integer.toString(livro.get_id())});
+    }
+
+
+
 }
