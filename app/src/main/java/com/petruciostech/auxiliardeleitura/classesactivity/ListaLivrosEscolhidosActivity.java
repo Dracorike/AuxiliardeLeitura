@@ -1,5 +1,5 @@
 package com.petruciostech.auxiliardeleitura.classesactivity;
-//Importações android e Java
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
+
 import com.petruciostech.auxiliardeleitura.R;
 import com.petruciostech.auxiliardeleitura.bancodados.LivroCadastroDao;
 import com.petruciostech.auxiliardeleitura.classeobjeto.Livro;
@@ -56,13 +58,39 @@ public class ListaLivrosEscolhidosActivity extends AppCompatActivity{
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menuinicial, menu);
+
+        SearchView achar = (SearchView) menu.findItem(R.id.app_bar_search).getActionView();
+        achar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                procurarLivro(newText);
+                return false;
+            }
+        }
+        );
+
         return super.onCreateOptionsMenu(menu);
     }
 
+    public void procurarLivro(String titulo){
+        livroListagemFiltro.clear();
+        for(Livro livro: livroListagem){
+            if(livro.getTitulo().toLowerCase().contains(titulo.toLowerCase())){
+                livroListagemFiltro.add(livro);
+            }
+        }
 
-    public void adicionarLivro(MenuItem menuItem){
-        Intent in = new Intent(this, MainActivity.class);
-        startActivity(in);
+        listaCadastrados.invalidateViews();
+    }
+
+    public void adicionarLivro(View view){
+        Intent it = new Intent(this, MainActivity.class);
+        startActivity(it);
     }
 
     public void onResume(){
